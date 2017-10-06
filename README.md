@@ -1,20 +1,22 @@
-# pm2-windows-service
+# pm2-windows-service-nosetup
 
 Allows easily installing and uninstalling [PM2](https://github.com/Unitech/PM2/) as a service on Windows machines - inspired by [pm2-windows-startup](https://github.com/marklagendijk/node-pm2-windows-startup), and largely achieved using [node-windows](https://github.com/coreybutler/node-windows).
 
+**NOTE**: The documentation may not be relevant for the configuration bits. We ripped out the interactive setup and thus you're on your own. Take this :hocho:
+
 ```sh
-npm i pm2-windows-service -g
+npm i pm2-windows-service-nosetup -g
 ```
 
-**NOTE:** pm2-windows-service currently requires node v4.0.0+, if node v0.12.x support is a requirement for you, please post in [this issue](https://github.com/jon-hall/pm2-windows-service/issues/2).
+**NOTE:** pm2-windows-service-nosetup currently requires node v4.0.0+, if node v0.12.x support is a requirement for you, please post in [this issue](https://github.com/jon-hall/pm2-windows-service-nosetup/issues/2).
 
 ### Install and Uninstall the Service
 > TIP: Run these from an administrative command prompt to avoid getting hit with a bunch of UAC dialogs
 
 ```sh
-pm2-service-install [-n <service name>]
+pm2-service-install-nosetup [-n <service name>]
 
-pm2-service-uninstall
+pm2-service-uninstall-nosetup
 ```
 The install command also offers to perform some basic setup for you which helps address some of the [caveats](#caveats) detailed below.
 
@@ -37,10 +39,10 @@ While testing this, a few caveats have arisen which need to be detailed upfront,
     - To avoid this problem, either ***set `PM2_HOME` to an absolute path that all potential users (service and CLI) can write to***, *or* ***run the service under the same account as you intend to use the CLI from***.
   - It also seems PM2 throws an error when you try to use the CLI from a *non-administrative command prompt* after it has been launched as a service, regardless of which user the service runs under (not tested with a non-admin user, yet).
     - Currently, the workaround for this, unfortunately, is just ***use an administrative command prompt*** if you need to access PM2 via command line when it is running as a service.
-  - As raised in [#24](https://github.com/jon-hall/pm2-windows-service/issues/24), there appears to be a dependency on ***having .NET 3.5 installed*** on the machine on which the service runs (and this holds true even when later versions are installed, you still need 3.5 as well) - this issue is still under investigation but, while that's happening, this is something to bear in mind when setting up the service.
+  - As raised in [#24](https://github.com/jon-hall/pm2-windows-service-nosetup/issues/24), there appears to be a dependency on ***having .NET 3.5 installed*** on the machine on which the service runs (and this holds true even when later versions are installed, you still need 3.5 as well) - this issue is still under investigation but, while that's happening, this is something to bear in mind when setting up the service.
   - Lastly, when launching json config files using `PM2_SERVICE_SCRIPTS`, problems arise if the apps declared in the config file don't explicitly have a `cwd` set (it ends up being the home dir of the service user).
-    - `pm2-windows-service` attempts to solve this issue for you by ***automatically defaulting the `cwd` property to the directory of the config file when it isn't explicitly set***, if this is an issue for you then explicitly setting the `cwd` for your apps might be what you need to do.
+    - `pm2-windows-service-nosetup` attempts to solve this issue for you by ***automatically defaulting the `cwd` property to the directory of the config file when it isn't explicitly set***, if this is an issue for you then explicitly setting the `cwd` for your apps might be what you need to do.
 
 ### Logs
 
-The service created by node-windows is currently placed in `<global npm packages directory>/node_modules/pm2-windows-service/src/daemon/`, as such, this is also where you will find the log output from the service, should you need it.
+The service created by node-windows is currently placed in `<global npm packages directory>/node_modules/pm2-windows-service-nosetup/src/daemon/`, as such, this is also where you will find the log output from the service, should you need it.
