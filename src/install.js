@@ -20,7 +20,7 @@ module.exports = co.wrap(function*(name, no_setup) {
     yield common.admin_warning();
 
     let setup_response = Promise.resolve({
-        perform_setup: false;
+        perform_setup: false
     });
 
     if(setup_response.perform_setup) {
